@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">User Management</h1>
+                <a href="{{ url_for('admin.create_user') }}" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Create New User
+                </a>
+            </div>
+            <p class="text-muted">Manage user accounts, create new users, or suspend existing accounts.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card stats-container mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">User Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="stat-card p-3 rounded">
+                                <h3>{{ users|length }}</h3>
+                                <p class="mb-0">Total Users</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card p-3 rounded">
+                                <h3>{{ users|selectattr('is_admin', 'equalto', true)|list|length }}</h3>
+                                <p class="mb-0">Admin Users</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card p-3 rounded">
+                                <h3>{{ users|selectattr('is_active', 'equalto', true)|list|length }}</h3>
+                                <p class="mb-0">Active Users</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="stat-card p-3 rounded">
+                                <h3>{{ users|selectattr('is_active', 'equalto', false)|list|length }}</h3>
+                                <p class="mb-0">Suspended Users</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+        {% for user in users %}
+        <div class="col">
+            <div class="card h-100 user-card">
+                <div class="card-header">
+                    <h5 class="mb-0 d-flex align-items-center">
+                        <span class="text-truncate">{{ user.username }}</span>
+                        <div class="ms-auto">
+                            {% if user.is_admin %}
+                            <span class="badge bg-primary ms-1">Admin</span>
+                            {% endif %}
+                            {% if not user.is_active %}
+                            <span class="badge bg-danger ms-1">Suspended</span>
+                            {% endif %}
+                        </div>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="user-info">
+                        <p><i class="fas fa-envelope me-2"></i> {{ user.email }}</p>
+                        <p><i class="fas fa-calendar-alt me-2"></i> Joined: {{ user.created_at.strftime('%Y-%m-%d') }}</p>
+                        {% if user.last_login %}
+                        <p><i class="fas fa-clock me-2"></i> Last login: {{ user.last_login.strftime('%Y-%m-%d %H:%M') }}</p>
+                        {% else %}
+                        <p><i class="fas fa-clock me-2"></i> Last login: Never</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('admin.edit_user', user_id=user.id) }}" class="btn btn-sm btn-outline-light">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <div>
+                            <form action="{{ url_for('admin.toggle_user_status', user_id=user.id) }}" method="POST" class="d-inline">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm {% if user.is_active %}btn-outline-warning{% else %}btn-outline-success{% endif %}">
+                                    {% if user.is_active %}
+                                    <i class="fas fa-user-slash"></i> Suspend
+                                    {% else %}
+                                    <i class="fas fa-user-check"></i> Activate
+                                    {% endif %}
+                                </button>
+                            </form>
+                            <form action="{{ url_for('admin.delete_user', user_id=user.id) }}" method="POST" class="d-inline ms-1" onsubmit="return confirm('Are you sure you want to delete this user? This action cannot be undone.')">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Styles moved to admin.css -->
+{% endblock %}

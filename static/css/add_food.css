@@ -1,0 +1,241 @@
+/* Add Food Form Styles for Diet & Nutrition AI Application */
+
+/* Form Layout */
+.add-food-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+.add-food-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.add-food-header h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.add-food-header h1 i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.add-food-header p {
+    color: var(--text-secondary);
+}
+
+.add-food-form {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.form-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.form-title i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.form-content {
+    padding: var(--spacing-xl);
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.section-title i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+/* Food Details Section */
+.food-details-section .form-row {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.food-details-section .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.food-quantity-row .form-group:first-child {
+    flex: 2;
+}
+
+.food-quantity-row .form-group:last-child {
+    flex: 1;
+}
+
+/* Nutrition Information Section */
+.nutrition-info-section .form-row {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.nutrition-info-section .form-group {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.nutrition-calculator {
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.calculator-hint {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.calculator-hint i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.calculator-formula {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.macro-distribution {
+    display: flex;
+    margin-top: var(--spacing-md);
+    gap: var(--spacing-md);
+}
+
+.macro-percentage {
+    flex: 1;
+    text-align: center;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-md);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.macro-percentage.protein {
+    background-color: rgba(74, 247, 166, 0.1);
+    color: var(--protein-color);
+}
+
+.macro-percentage.carbs {
+    background-color: rgba(247, 201, 74, 0.1);
+    color: var(--carbs-color);
+}
+
+.macro-percentage.fat {
+    background-color: rgba(247, 74, 108, 0.1);
+    color: var(--fat-color);
+}
+
+/* AI Analyzer Link */
+.ai-analyzer-link {
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.ai-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--border-radius-circle);
+    background-color: rgba(74, 108, 247, 0.1);
+    color: var(--info-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-lg);
+    font-size: 1.5rem;
+}
+
+.ai-text {
+    flex: 1;
+}
+
+.ai-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.ai-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.ai-btn {
+    margin-left: var(--spacing-lg);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .food-details-section .form-row,
+    .nutrition-info-section .form-row {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .ai-analyzer-link {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .ai-icon {
+        margin-right: 0;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .ai-btn {
+        margin-left: 0;
+        margin-top: var(--spacing-md);
+        width: 100%;
+    }
+    
+    .macro-distribution {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,373 @@
+/* Statistics Page Styles for Diet & Nutrition AI Application */
+
+/* Statistics Layout */
+.statistics-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-md);
+}
+
+.charts-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.sidebar-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* Time Range Selector */
+.time-range-selector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.time-range-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--tertiary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    color: var(--text-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.time-range-btn:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.time-range-btn.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+/* Chart Panels */
+.chart-panel {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+}
+
+.chart-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chart-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+}
+
+.chart-title i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.chart-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.chart-container {
+    padding: var(--spacing-lg);
+    height: 300px;
+    position: relative;
+}
+
+.chart-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+/* Weekly Summary Panel */
+.weekly-summary {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+}
+
+.summary-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.summary-header i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.summary-content {
+    padding: var(--spacing-lg);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-label {
+    color: var(--text-secondary);
+}
+
+.summary-value {
+    font-weight: 500;
+}
+
+/* AI Insights Panel */
+.ai-insights {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.insights-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.insights-header i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.insights-content {
+    padding: var(--spacing-lg);
+    flex: 1;
+    overflow-y: auto;
+}
+
+.insight-item {
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.insight-item:last-child {
+    margin-bottom: 0;
+}
+
+.insight-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+}
+
+.insight-title i {
+    margin-right: var(--spacing-sm);
+}
+
+.insight-title.positive i {
+    color: var(--success-color);
+}
+
+.insight-title.negative i {
+    color: var(--danger-color);
+}
+
+.insight-title.neutral i {
+    color: var(--info-color);
+}
+
+.insight-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.insight-action {
+    margin-top: var(--spacing-md);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.insight-action i {
+    margin-left: var(--spacing-xs);
+    transition: transform 0.3s ease;
+}
+
+.insight-action:hover i {
+    transform: translateX(4px);
+}
+
+/* Export Options */
+.export-options {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+}
+
+.export-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+.export-header i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.export-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.export-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.export-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.export-btn i {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.export-format {
+    font-weight: 500;
+}
+
+/* Loading State */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 29, 41, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: var(--border-radius-md);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 210, 163, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--accent-color);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* No Data State */
+.no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xxl);
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.no-data i {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.5;
+}
+
+.no-data h3 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-color);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .statistics-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar-column {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .ai-insights {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar-column {
+        grid-template-columns: 1fr;
+    }
+    
+    .ai-insights {
+        grid-column: span 1;
+    }
+    
+    .time-range-selector {
+        flex-wrap: wrap;
+    }
+    
+    .export-content {
+        flex-direction: column;
+    }
+}

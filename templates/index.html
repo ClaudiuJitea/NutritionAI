@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Nutrition Tracker{% endblock %}
+
+{% block content %}
+<div class="landing-container">
+    <div class="landing-content">
+        <h1 class="landing-title">Track Your Nutrition Journey</h1>
+        <p class="landing-subtitle">Monitor your diet, set goals, and achieve better health with our AI-powered nutrition tracking app.</p>
+        
+        <div class="landing-features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>AI Food Recognition</h3>
+                    <p>Simply upload a photo of your meal and our AI will identify the food and estimate nutrition values.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Track Progress</h3>
+                    <p>Monitor your nutrition intake, track your goals, and visualize your progress over time.</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>Personalized Tips</h3>
+                    <p>Get customized nutrition tips based on your eating habits and health goals.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="landing-cta">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-lg">Log In</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-primary btn-lg">Sign Up</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_css %}
+<style>
+    .landing-container {
+        min-height: calc(100vh - 150px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-xl);
+        background-color: var(--primary-bg);
+    }
+    
+    .landing-content {
+        max-width: 1200px;
+        text-align: center;
+    }
+    
+    .landing-title {
+        font-size: 3rem;
+        margin-bottom: var(--spacing-md);
+        color: var(--accent-color);
+    }
+    
+    .landing-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-xxl);
+        color: var(--text-secondary);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .landing-features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-xl);
+        margin-bottom: var(--spacing-xxl);
+    }
+    
+    .feature-card {
+        background-color: var(--secondary-bg);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-xl);
+        width: 300px;
+        box-shadow: var(--box-shadow);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--tertiary-bg);
+        border-radius: 50%;
+        margin-bottom: var(--spacing-md);
+        color: var(--accent-color);
+        font-size: 1.5rem;
+    }
+    
+    .feature-content h3 {
+        font-size: 1.25rem;
+        margin-bottom: var(--spacing-sm);
+        color: var(--text-color);
+    }
+    
+    .feature-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    
+    .landing-cta {
+        display: flex;
+        gap: var(--spacing-md);
+        justify-content: center;
+    }
+    
+    .btn-lg {
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: 1.1rem;
+    }
+    
+    .btn-outline-primary {
+        background-color: transparent;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: var(--accent-color);
+        color: var(--primary-bg);
+    }
+    
+    @media (max-width: 768px) {
+        .landing-features {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .landing-title {
+            font-size: 2.5rem;
+        }
+        
+        .landing-cta {
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,317 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - Diet & Nutrition{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+            <a href="{{ url_for('nutrition.dashboard') }}" class="btn btn-outline-light back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+        <p>Manage your account and nutrition goals</p>
+    </div>
+    
+    <div class="profile-content">
+        <!-- Account Information -->
+        <div class="profile-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-id-card"></i> Account Information
+                </div>
+                <div class="panel-actions">
+                    <button class="btn btn-outline edit-account-btn">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </div>
+            </div>
+            
+            <div class="panel-content">
+                <div class="account-info" id="account-info-display">
+                    <div class="info-row">
+                        <div class="info-label">Username:</div>
+                        <div class="info-value">{{ current_user.username }}</div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="info-label">Email:</div>
+                        <div class="info-value">{{ current_user.email }}</div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <div class="info-label">Member Since:</div>
+                        <div class="info-value">{{ current_user.created_at.strftime('%B %d, %Y') }}</div>
+                    </div>
+                </div>
+                
+                <form method="POST" action="{{ url_for('auth.profile') }}" class="account-form" id="account-form" style="display: none;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="update_type" value="account">
+                    
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" value="{{ current_user.username }}" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" value="{{ current_user.email }}" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary cancel-edit-btn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Change Password -->
+        <div class="profile-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-lock"></i> Change Password
+                </div>
+            </div>
+            
+            <div class="panel-content">
+                <form method="POST" action="{{ url_for('auth.profile') }}" class="password-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="update_type" value="password">
+                    
+                    <div class="form-group">
+                        <label for="current_password">Current Password</label>
+                        <input type="password" id="current_password" name="current_password" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="new_password">New Password</label>
+                        <input type="password" id="new_password" name="new_password" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm New Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-key"></i> Update Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Nutrition Goals -->
+        <div class="profile-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-bullseye"></i> Nutrition Goals
+                </div>
+                <div class="panel-actions">
+                    <button class="btn btn-outline edit-goals-btn">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </div>
+            </div>
+            
+            <div class="panel-content">
+                <div class="goals-info" id="goals-info-display">
+                    <div class="goals-grid">
+                        <div class="goal-item">
+                            <div class="goal-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="goal-data">
+                                <div class="goal-value">{{ current_user.calorie_goal }}</div>
+                                <div class="goal-label">Daily Calories (kcal)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <div class="goal-icon">
+                                <i class="fas fa-drumstick-bite"></i>
+                            </div>
+                            <div class="goal-data">
+                                <div class="goal-value">{{ current_user.protein_goal }}</div>
+                                <div class="goal-label">Protein (g)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <div class="goal-icon">
+                                <i class="fas fa-bread-slice"></i>
+                            </div>
+                            <div class="goal-data">
+                                <div class="goal-value">{{ current_user.carbs_goal }}</div>
+                                <div class="goal-label">Carbs (g)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <div class="goal-icon">
+                                <i class="fas fa-cheese"></i>
+                            </div>
+                            <div class="goal-data">
+                                <div class="goal-value">{{ current_user.fat_goal }}</div>
+                                <div class="goal-label">Fat (g)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="goal-item">
+                            <div class="goal-icon">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="goal-data">
+                                <div class="goal-value">{{ current_user.water_goal }}</div>
+                                <div class="goal-label">Water (ml)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form method="POST" action="{{ url_for('auth.profile') }}" class="goals-form" id="goals-form" style="display: none;">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="update_type" value="goals">
+                    
+                    <div class="form-group">
+                        <label for="calorie_goal">Daily Calories (kcal)</label>
+                        <input type="number" id="calorie_goal" name="calorie_goal" class="form-control" value="{{ current_user.calorie_goal }}" min="1000" max="5000" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="protein_goal">Protein (g)</label>
+                            <input type="number" id="protein_goal" name="protein_goal" class="form-control" value="{{ current_user.protein_goal }}" min="20" max="300" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="carbs_goal">Carbs (g)</label>
+                            <input type="number" id="carbs_goal" name="carbs_goal" class="form-control" value="{{ current_user.carbs_goal }}" min="20" max="500" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fat_goal">Fat (g)</label>
+                            <input type="number" id="fat_goal" name="fat_goal" class="form-control" value="{{ current_user.fat_goal }}" min="10" max="200" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="water_goal">Water (ml)</label>
+                        <input type="number" id="water_goal" name="water_goal" class="form-control" value="{{ current_user.water_goal }}" min="500" max="5000" required>
+                    </div>
+                    
+                    <div class="nutrition-calculator">
+                        <div class="calculator-hint">
+                            <i class="fas fa-calculator"></i> Total calories: <span id="calculated-calories">{{ current_user.calorie_goal }}</span> kcal
+                        </div>
+                        <div class="calculator-formula">
+                            (Protein: <span id="protein-calories">{{ current_user.protein_goal * 4 }}</span> kcal + Carbs: <span id="carbs-calories">{{ current_user.carbs_goal * 4 }}</span> kcal + Fat: <span id="fat-calories">{{ current_user.fat_goal * 9 }}</span> kcal)
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary cancel-goals-btn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Data Management -->
+        <div class="profile-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-database"></i> Data Management
+                </div>
+            </div>
+            
+            <div class="panel-content">
+                <div class="data-management-options">
+                    <div class="data-option">
+                        <div class="data-option-title">
+                            <i class="fas fa-file-export"></i> Export Your Data
+                        </div>
+                        <div class="data-option-description">
+                            Download all your nutrition data in CSV or JSON format
+                        </div>
+                        <div class="data-option-actions">
+                            <a href="{{ url_for('auth.export_csv') }}" class="btn btn-outline">
+                                <i class="fas fa-file-csv"></i> CSV
+                            </a>
+                            <a href="{{ url_for('auth.export_json') }}" class="btn btn-outline">
+                                <i class="fas fa-file-code"></i> JSON
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="data-option">
+                        <div class="data-option-title">
+                            <i class="fas fa-trash-alt"></i> Delete Account
+                        </div>
+                        <div class="data-option-description">
+                            Permanently delete your account and all associated data
+                        </div>
+                        <div class="data-option-actions">
+                            <button class="btn btn-danger" id="delete-account-btn">
+                                <i class="fas fa-trash-alt"></i> Delete Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Account Confirmation Modal -->
+<div id="delete-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2><i class="fas fa-exclamation-triangle"></i> Delete Account</h2>
+        <div class="modal-body">
+            <p class="warning-text">Are you sure you want to delete your account? This action cannot be undone and will permanently delete all your data.</p>
+            
+            <form method="POST" action="{{ url_for('auth.profile') }}" id="delete-account-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="update_type" value="delete_account">
+                
+                <div class="form-group">
+                    <label for="delete_password">Enter your password to confirm:</label>
+                    <input type="password" id="delete_password" name="password" class="form-control" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-delete">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Permanently Delete Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- JavaScript functionality moved to profile.js -->

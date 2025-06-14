@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics - Diet & Nutrition{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/statistics.css') }}">
+{% endblock %}
+
+{% block page_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script src="{{ url_for('static', filename='js/statistics.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="statistics-container">
+    <div class="statistics-header">
+        <h1><i class="fas fa-chart-line"></i> Nutrition Statistics</h1>
+        <div class="time-range-selector">
+            <button class="btn btn-outline time-range-btn active" data-range="week">Week</button>
+            <button class="btn btn-outline time-range-btn" data-range="month">Month</button>
+            <button class="btn btn-outline time-range-btn" data-range="year">Year</button>
+        </div>
+    </div>
+    
+    <!-- Main Statistics Grid -->
+    <div class="statistics-grid">
+        <!-- Calorie Trends -->
+        <div class="stat-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-fire"></i> Calorie Trends
+                </div>
+                <div class="panel-subtitle">
+                    Daily calorie intake vs. goal
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="calorieChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Macro Distribution -->
+        <div class="stat-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-chart-pie"></i> Macro Distribution
+                </div>
+                <div class="panel-subtitle">
+                    Average macronutrient breakdown
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="macroChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Food Categories -->
+        <div class="stat-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-utensils"></i> Food Categories
+                </div>
+                <div class="panel-subtitle">
+                    Breakdown by food type
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Goal Achievement -->
+        <div class="stat-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-bullseye"></i> Goal Achievement
+                </div>
+                <div class="panel-subtitle">
+                    How often you meet your targets
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="goalChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Nutrition Insights -->
+    <div class="insights-panel">
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fas fa-lightbulb"></i> Nutrition Insights
+            </div>
+        </div>
+        
+        <div class="insights-content">
+            <div class="insights-loading" id="insights-loading">
+                <div class="spinner"></div>
+                <p>Analyzing your nutrition data...</p>
+            </div>
+            
+            <div class="insights-results" id="insights-results" style="display: none;">
+                <!-- This will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Weekly Summary -->
+    <div class="weekly-summary-panel">
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fas fa-calendar-week"></i> Weekly Summary
+            </div>
+            <div class="panel-subtitle">
+                <span id="week-range">Last 7 days</span>
+            </div>
+        </div>
+        
+        <div class="weekly-summary-content">
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="summary-data">
+                        <div class="summary-value" id="avg-calories">0</div>
+                        <div class="summary-label">Avg. Calories</div>
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div class="summary-icon">
+                        <i class="fas fa-drumstick-bite"></i>
+                    </div>
+                    <div class="summary-data">
+                        <div class="summary-value" id="avg-protein">0g</div>
+                        <div class="summary-label">Avg. Protein</div>
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div class="summary-icon">
+                        <i class="fas fa-bread-slice"></i>
+                    </div>
+                    <div class="summary-data">
+                        <div class="summary-value" id="avg-carbs">0g</div>
+                        <div class="summary-label">Avg. Carbs</div>
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div class="summary-icon">
+                        <i class="fas fa-cheese"></i>
+                    </div>
+                    <div class="summary-data">
+                        <div class="summary-value" id="avg-fat">0g</div>
+                        <div class="summary-label">Avg. Fat</div>
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div class="summary-icon">
+                        <i class="fas fa-tint"></i>
+                    </div>
+                    <div class="summary-data">
+                        <div class="summary-value" id="avg-water">0ml</div>
+                        <div class="summary-label">Avg. Water</div>
+                    </div>
+                </div>
+                
+                <div class="summary-item">
+                    <div class="summary-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="summary-data">
+                        <div class="summary-value" id="days-logged">0/7</div>
+                        <div class="summary-label">Days Logged</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Export Options -->
+    <div class="export-panel">
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fas fa-file-export"></i> Export Data
+            </div>
+        </div>
+        
+        <div class="export-options">
+            <button class="btn btn-outline export-btn" data-format="csv">
+                <i class="fas fa-file-csv"></i> Export as CSV
+            </button>
+            
+            <button class="btn btn-outline export-btn" data-format="json">
+                <i class="fas fa-file-code"></i> Export as JSON
+            </button>
+            
+            <button class="btn btn-outline export-btn" data-format="pdf">
+                <i class="fas fa-file-pdf"></i> Export as PDF
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- JavaScript functionality moved to statistics.js -->

@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Add Food - Diet & Nutrition{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/add_food.css') }}">
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/add_food.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="add-food-container">
+    <div class="panel">
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fas fa-utensils"></i> Add Food Entry
+            </div>
+            <div class="panel-subtitle">
+                {{ formatted_date }}
+            </div>
+        </div>
+        
+        <div class="panel-content">
+            <form method="POST" action="{{ url_for('nutrition.add_food') }}" class="add-food-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="date_logged" value="{{ selected_date }}">
+                <input type="hidden" name="ai_analyzed" value="false">
+                
+                <div class="form-group">
+                    <label for="food_description">Food Description</label>
+                    <input type="text" id="food_description" name="food_description" class="form-control" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="0.1" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="unit">Unit</label>
+                        <select id="unit" name="unit" class="form-control">
+                            <option value="serving">Serving</option>
+                            <option value="g">Grams (g)</option>
+                            <option value="oz">Ounces (oz)</option>
+                            <option value="ml">Milliliters (ml)</option>
+                            <option value="cup">Cup</option>
+                            <option value="tbsp">Tablespoon</option>
+                            <option value="tsp">Teaspoon</option>
+                            <option value="piece">Piece</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="meal_type">Meal Type</label>
+                        <select id="meal_type" name="meal_type" class="form-control">
+                            <option value="breakfast">Breakfast</option>
+                            <option value="lunch">Lunch</option>
+                            <option value="dinner">Dinner</option>
+                            <option value="snack">Snack</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="food_category">Food Category</label>
+                        <select id="food_category" name="food_category" class="form-control">
+                            <option value="fruit">Fruit</option>
+                            <option value="vegetable">Vegetable</option>
+                            <option value="grain">Grain</option>
+                            <option value="protein">Protein</option>
+                            <option value="dairy">Dairy</option>
+                            <option value="fat">Fat</option>
+                            <option value="beverage">Beverage</option>
+                            <option value="dessert">Dessert</option>
+                            <option value="snack">Snack</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="nutrition-inputs">
+                    <h3>Nutrition Information</h3>
+                    <p class="nutrition-hint">Enter the nutrition information for this food item</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="calories">Calories (kcal)</label>
+                            <input type="number" id="calories" name="calories" class="form-control" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="protein">Protein (g)</label>
+                            <input type="number" id="protein" name="protein" class="form-control" min="0" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="carbs">Carbs (g)</label>
+                            <input type="number" id="carbs" name="carbs" class="form-control" min="0" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fat">Fat (g)</label>
+                            <input type="number" id="fat" name="fat" class="form-control" min="0" step="0.1" required>
+                        </div>
+                    </div>
+                    
+                    <div class="nutrition-calculator">
+                        <div class="calculator-hint">
+                            <i class="fas fa-calculator"></i> Total calories: <span id="calculated-calories">0</span> kcal
+                        </div>
+                        <div class="calculator-formula">
+                            (Protein: <span id="protein-calories">0</span> kcal + Carbs: <span id="carbs-calories">0</span> kcal + Fat: <span id="fat-calories">0</span> kcal)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <a href="{{ url_for('nutrition.dashboard', date=selected_date) }}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Food Entry
+                    </button>
+                </div>
+            </form>
+            
+            <div class="ai-suggestion">
+                <div class="ai-suggestion-header">
+                    <i class="fas fa-lightbulb"></i> Don't know the nutritional info?
+                </div>
+                <p>Use our AI Food Analyzer on the dashboard to automatically estimate nutrition from a food image or description!</p>
+                <a href="{{ url_for('nutrition.dashboard', date=selected_date) }}#ai-analyzer" class="btn btn-outline">
+                    <i class="fas fa-brain"></i> Try AI Analyzer
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

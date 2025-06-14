@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Diet & Nutrition{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-panel">
+        <div class="auth-header">
+            <h1><i class="fas fa-user-plus"></i> Create Account</h1>
+            <p>Join Diet & Nutrition AI to start your health journey</p>
+        </div>
+        
+        <div class="auth-form">
+            <form method="POST" action="{{ url_for('auth.register') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" class="form-control{% if form.username.errors %} is-invalid{% endif %}" value="{{ form.username.data or '' }}" required>
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="form-error">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" class="form-control{% if form.email.errors %} is-invalid{% endif %}" value="{{ form.email.data or '' }}" required>
+                    </div>
+                    {% if form.email.errors %}
+                        <div class="form-error">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="form-error">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                    </div>
+                    {% if form.confirm_password.errors %}
+                        <div class="form-error">
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <h2 style="font-size: 1.2rem; margin-bottom: var(--spacing-md); color: var(--text-color);">Set your daily nutrition targets</h2>
+                    
+                    <div class="form-group">
+                        <label for="calorie_goal">Daily Calories (kcal)</label>
+                        <input type="number" id="calorie_goal" name="calorie_goal" class="form-control" value="2000" min="1000" max="5000" required>
+                    </div>
+                    
+                    <div class="macros-row">
+                        <div class="form-group">
+                            <label for="protein_goal">Protein (g)</label>
+                            <input type="number" id="protein_goal" name="protein_goal" class="form-control" value="150" min="20" max="300" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="carbs_goal">Carbs (g)</label>
+                            <input type="number" id="carbs_goal" name="carbs_goal" class="form-control" value="200" min="20" max="500" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fat_goal">Fat (g)</label>
+                            <input type="number" id="fat_goal" name="fat_goal" class="form-control" value="65" min="10" max="200" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="water_goal">Water (ml)</label>
+                        <input type="number" id="water_goal" name="water_goal" class="form-control" value="2500" min="500" max="5000" required>
+                    </div>
+                
+                <div class="form-group" style="margin: 20px 0; padding-left: 10px;">
+                    <div style="display: flex; align-items: center;">
+                        <input type="checkbox" name="terms" id="terms" required style="width: 20px; height: 20px; margin-right: 10px; accent-color: var(--accent-color);">
+                        <label for="terms" style="cursor: pointer; font-size: 0.9rem; color: var(--text-color);">
+                            I agree to the <a href="#" style="color: var(--accent-color); text-decoration: none; font-weight: 500;">Terms of Service</a> and <a href="#" style="color: var(--accent-color); text-decoration: none; font-weight: 500;">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="auth-footer">
+            <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+        </div>
+    </div>
+    
+    <div class="auth-features">
+        <div class="feature-header">
+            <h2>Diet & Nutrition AI</h2>
+            <p>Your personal nutrition assistant powered by artificial intelligence</p>
+        </div>
+        
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Food Image Analysis</h3>
+                    <p>Take a photo of your meal and get instant nutritional information</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Nutrition Tracking</h3>
+                    <p>Track your daily calories, macros, and water intake with beautiful visualizations</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Personalized Tips</h3>
+                    <p>Get AI-powered nutrition advice tailored to your goals and preferences</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Mobile Friendly</h3>
+                    <p>Access your nutrition data on any device with our responsive design</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms of Service Modal -->
+<div id="terms-modal" class="modal">
+    <div class="modal-content">
+        <span class="close terms-close">&times;</span>
+        <h2>Terms of Service</h2>
+        <div class="modal-body">
+            <p>These Terms of Service ("Terms") govern your access to and use of Diet & Nutrition AI. Please read these Terms carefully before using our service.</p>
+            
+            <h3>1. Acceptance of Terms</h3>
+            <p>By registering for and using Diet & Nutrition AI, you agree to be bound by these Terms and our Privacy Policy.</p>
+            
+            <h3>2. Description of Service</h3>
+            <p>Diet & Nutrition AI provides tools for tracking nutrition, analyzing food images, and generating personalized nutrition advice. The service is provided "as is" and may change over time.</p>
+            
+            <h3>3. User Accounts</h3>
+            <p>You are responsible for safeguarding your account and for all activities that occur under your account.</p>
+            
+            <h3>4. Content Ownership</h3>
+            <p>You retain ownership of any content you upload to Diet & Nutrition AI. By uploading content, you grant us a license to use, store, and display your content in connection with providing the service.</p>
+            
+            <h3>5. Disclaimer of Warranties</h3>
+            <p>Diet & Nutrition AI is not a substitute for professional medical or nutritional advice. Always consult with healthcare professionals regarding any dietary or health concerns.</p>
+            
+            <h3>6. Limitation of Liability</h3>
+            <p>To the maximum extent permitted by law, Diet & Nutrition AI shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the service.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div id="privacy-modal" class="modal">
+    <div class="modal-content">
+        <span class="close privacy-close">&times;</span>
+        <h2>Privacy Policy</h2>
+        <div class="modal-body">
+            <p>This Privacy Policy describes how Diet & Nutrition AI collects, uses, and shares your personal information.</p>
+            
+            <h3>1. Information We Collect</h3>
+            <p>We collect information you provide directly, such as account information, food entries, images, and nutrition goals. We also collect usage data when you interact with our service.</p>
+            
+            <h3>2. How We Use Your Information</h3>
+            <p>We use your information to provide and improve the service, analyze food images, generate nutrition advice, and communicate with you.</p>
+            
+            <h3>3. Information Sharing</h3>
+            <p>We do not sell your personal information. We may share information with third-party service providers who help us operate our service.</p>
+            
+            <h3>4. Data Security</h3>
+            <p>We implement reasonable security measures to protect your personal information from unauthorized access or disclosure.</p>
+            
+            <h3>5. Your Rights</h3>
+            <p>You have the right to access, correct, or delete your personal information. You can also object to or restrict certain processing of your information.</p>
+            
+            <h3>6. Changes to This Policy</h3>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- JavaScript functionality moved to auth.js -->

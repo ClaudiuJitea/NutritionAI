@@ -1,0 +1,291 @@
+/* Admin Dashboard Styles */
+
+/* Global Admin Styles */
+.admin-link {
+    margin-right: 15px;
+    color: var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+    color: var(--accent-hover);
+    transform: scale(1.1);
+}
+
+/* Container overrides for admin pages */
+.container {
+    max-width: 1320px;
+}
+
+/* Stats Container */
+.stats-container {
+    background-color: rgb(37, 40, 54);
+    color: white;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.stats-container .card-header {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--border-color);
+    color: white;
+}
+
+.stats-container .card-body {
+    background-color: rgb(37, 40, 54);
+}
+
+/* Stats Cards */
+.stat-card {
+    background-color: rgb(37, 40, 54);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow);
+    transition: all 0.3s ease;
+    height: 100%;
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+}
+
+.stat-card:hover {
+    background-color: var(--secondary-bg);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
+}
+
+.stat-card h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.stat-card p {
+    color: white;
+    font-weight: 500;
+}
+
+/* User Cards */
+.user-card {
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    color: white;
+}
+
+.user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-color: var(--accent-color);
+}
+
+.user-card .card-header {
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--spacing-md) var(--spacing-md);
+    background-color: var(--secondary-bg);
+    color: white;
+}
+
+.user-card .card-body {
+    flex: 1 1 auto;
+    padding: var(--spacing-md);
+    background-color: var(--tertiary-bg);
+    color: white;
+}
+
+.user-card .card-body p {
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.user-card .card-body i {
+    color: var(--accent-color);
+    width: 20px;
+    text-align: center;
+}
+
+.user-card .card-footer {
+    border-top: 1px solid var(--border-color);
+    background-color: var(--secondary-bg);
+    padding: var(--spacing-md) var(--spacing-md);
+    color: white;
+}
+
+/* Form Styling */
+.form-control {
+    background-color: var(--tertiary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    background-color: var(--tertiary-bg);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+    box-shadow: 0 0 0 0.25rem rgba(0, 210, 163, 0.25);
+}
+
+/* User Form Card */
+.user-form-card {
+    background-color: rgb(37, 40, 54);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    color: white;
+}
+
+.user-form-card .card-header {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--border-color);
+    padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.user-form-card .card-body {
+    padding: var(--spacing-lg);
+}
+
+/* Custom Form Inputs */
+.custom-input {
+    background-color: var(--secondary-bg) !important;
+    border: 1px solid var(--border-color);
+    color: white !important;
+    border-radius: var(--border-radius-md);
+    padding: 12px 15px;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    background-color: var(--tertiary-bg) !important;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(0, 210, 163, 0.25);
+}
+
+/* Custom Switch */
+.custom-switch .form-check-input {
+    background-color: var(--secondary-bg);
+    border-color: var(--border-color);
+    width: 3rem;
+    height: 1.5rem;
+}
+
+.custom-switch .form-check-input:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.custom-switch .form-check-label {
+    padding-left: 0.5rem;
+    color: white;
+}
+
+/* Create User Button */
+.create-user-btn, .update-user-btn {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--primary-bg);
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: var(--border-radius-md);
+    transition: all 0.3s ease;
+}
+
+.create-user-btn:hover, .update-user-btn:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-check-input {
+    background-color: var(--tertiary-bg);
+    border-color: var(--border-color);
+}
+
+.form-check-input:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* Badge Styling */
+.badge.bg-primary {
+    background-color: var(--accent-color) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--primary-bg);
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: var(--primary-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-light {
+    color: var(--text-color);
+    border-color: var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--tertiary-bg);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.btn-outline-warning {
+    color: var(--warning-color);
+    border-color: var(--warning-color);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--warning-color);
+    color: var(--primary-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-success {
+    color: var(--success-color);
+    border-color: var(--success-color);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-success:hover {
+    background-color: var(--success-color);
+    color: var(--primary-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-danger {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+    transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--danger-color);
+    color: var(--primary-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

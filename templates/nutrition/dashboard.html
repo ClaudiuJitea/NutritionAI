@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Diet & Nutrition{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Left Column: Daily Food Log -->
+    <div class="dashboard-column food-log-column">
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fas fa-calendar-day"></i> Daily Food Log
+            </div>
+            <div class="date-navigation">
+                <a href="{{ url_for('nutrition.dashboard', date=prev_day) }}" class="nav-arrow"><i class="fas fa-chevron-left"></i></a>
+                <span class="current-date">{{ formatted_date }}</span>
+                <a href="{{ url_for('nutrition.dashboard', date=next_day) }}" class="nav-arrow"><i class="fas fa-chevron-right"></i></a>
+            </div>
+            <div class="panel-actions">
+                <a href="{{ url_for('nutrition.add_food', date=selected_date) }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Food
+                </a>
+            </div>
+        </div>
+        
+        <!-- Daily Nutrition Summary -->
+        <div class="panel daily-nutrition-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-chart-pie"></i> Daily Nutrition
+                </div>
+                <div class="calorie-goal">
+                    <i class="fas fa-fire"></i> Calorie goal: {{ current_user.calorie_goal }} kcal
+                </div>
+            </div>
+            
+            <div class="nutrition-summary">
+                <div class="calorie-progress">
+                    <div class="progress-circle" data-progress="{{ calories_percent }}" data-over="{{ nutrition_data.calories > current_user.calorie_goal }}">
+                        <svg viewBox="0 0 36 36" class="circular-chart">
+                            <path class="circle-bg" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="circle" stroke-dasharray="{{ calories_percent if calories_percent <= 100 else 100 }}, 100" d="M18 2.0845
+                                a 15.9155 15.9155 0 0 1 0 31.831
+                                a 15.9155 15.9155 0 0 1 0 -31.831"
+                                {% if nutrition_data.calories > current_user.calorie_goal %}style="stroke: var(--danger-color);"{% endif %}/>
+                            <text x="18" y="20.35" class="percentage" {% if nutrition_data.calories > current_user.calorie_goal %}style="fill: var(--danger-color);"{% endif %}>{{ calories_percent }}%</text>
+                        </svg>
+                        <!-- Removed 'of goal' text as requested -->
+                    </div>
+                    
+                    <div class="calorie-details">
+                        <div class="calorie-count">
+                            <span class="current-calories">{{ nutrition_data.calories }}</span> / {{ current_user.calorie_goal }}
+                        </div>
+                        <div class="calorie-remaining" {% if nutrition_data.calories > current_user.calorie_goal %}style="color: var(--danger-color);"{% endif %}>
+                            {% if nutrition_data.calories > current_user.calorie_goal %}
+                                Extra: {{ nutrition_data.calories - current_user.calorie_goal }} kcal
+                            {% else %}
+                                Remaining: {{ current_user.calorie_goal - nutrition_data.calories }} kcal
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="macro-distribution">
+                    <h3>Macro Distribution</h3>
+                    <div class="macro-item">
+                        <div class="macro-label">Protein:</div>
+                        <div class="macro-progress">
+                            <div class="progress-bar protein" data-percent="{{ (nutrition_data.protein / current_user.protein_goal) * 100 if current_user.protein_goal > 0 else 0 }}"></div>
+                        </div>
+                        <div class="macro-value" data-over="{{ nutrition_data.protein > current_user.protein_goal }}"><span class="actual-value">{{ nutrition_data.protein }}g</span>/{{ current_user.protein_goal }}g</div>
+                    </div>
+                    <div class="macro-item">
+                        <div class="macro-label">Carbs:</div>
+                        <div class="macro-progress">
+                            <div class="progress-bar carbs" data-percent="{{ (nutrition_data.carbs / current_user.carbs_goal) * 100 if current_user.carbs_goal > 0 else 0 }}"></div>
+                        </div>
+                        <div class="macro-value" data-over="{{ nutrition_data.carbs > current_user.carbs_goal }}"><span class="actual-value">{{ nutrition_data.carbs }}g</span>/{{ current_user.carbs_goal }}g</div>
+                    </div>
+                    <div class="macro-item">
+                        <div class="macro-label">Fat:</div>
+                        <div class="macro-progress">
+                            <div class="progress-bar fat" data-percent="{{ (nutrition_data.fat / current_user.fat_goal) * 100 if current_user.fat_goal > 0 else 0 }}"></div>
+                        </div>
+                        <div class="macro-value" data-over="{{ nutrition_data.fat > current_user.fat_goal }}"><span class="actual-value">{{ nutrition_data.fat }}g</span>/{{ current_user.fat_goal }}g</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Food Entries -->
+        <div class="food-entries-container">
+            {% if nutrition_data.entries|length > 0 %}
+                {% for category, entries in nutrition_data.entries|groupby('food_category') %}
+                <div class="food-category">
+                    <div class="category-header">
+                        <i class="fas fa-utensils"></i> {{ category|capitalize }}
+                        <span class="entry-count">{{ entries|length }} item{% if entries|length != 1 %}s{% endif %}</span>
+                    </div>
+                    
+                    {% for entry in entries %}
+                    <div class="food-entry">
+                        <div class="food-icon">
+                            {% if entry.food_category == 'fruit' %}
+                                <i class="fas fa-apple-alt"></i>
+                            {% elif entry.food_category == 'vegetable' %}
+                                <i class="fas fa-carrot"></i>
+                            {% elif entry.food_category == 'meat' %}
+                                <i class="fas fa-drumstick-bite"></i>
+                            {% elif entry.food_category == 'fish' %}
+                                <i class="fas fa-fish"></i>
+                            {% elif entry.food_category == 'dairy' %}
+                                <i class="fas fa-cheese"></i>
+                            {% elif entry.food_category == 'grain' %}
+                                <i class="fas fa-bread-slice"></i>
+                            {% else %}
+                                <i class="fas fa-utensils"></i>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="food-details">
+                            <div class="food-name">{{ entry.food_description }}</div>
+                            <div class="food-macros">
+                                <span class="macro protein">P:{{ entry.protein }}g</span>
+                                <span class="macro carbs">C:{{ entry.carbs }}g</span>
+                                <span class="macro fat">F:{{ entry.fat }}g</span>
+                                <span class="quantity">{{ entry.quantity }} {{ entry.unit }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="food-calories">
+                            {{ entry.calories }} kcal
+                        </div>
+                        
+                        <div class="food-actions">
+                            {% if entry.image_url %}
+                            <button class="btn-icon view-image" data-image="{{ entry.image_url }}">
+                                <i class="fas fa-image"></i>
+                            </button>
+                            {% endif %}
+                            <form action="{{ url_for('nutrition.delete_food', entry_id=entry.id) }}" method="POST" class="delete-form">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn-icon delete" onclick="return confirm('Are you sure you want to delete this entry?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Food Diary Empty</h3>
+                    <p>Nothing logged for today. Ready to add your first meal?</p>
+                    <a href="{{ url_for('nutrition.add_food', date=selected_date) }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Log First Entry
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <!-- Water Intake Tracker -->
+        <div class="panel water-intake-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-tint"></i> Water Intake
+                </div>
+            </div>
+            
+            <div class="water-tracker">
+                <div class="water-progress">
+                    <div class="water-container">
+                        <div class="water-level" data-percent="{{ water_percent if water_percent is defined else 0 }}"></div>
+                    </div>
+                    <div class="water-amount">{{ water_intake }}</div>
+                    <div class="water-goal">{{ water_percent }}% of {{ current_user.water_goal }}ml goal</div>
+                </div>
+                
+                <div class="water-actions">
+                    <form action="{{ url_for('nutrition.add_water') }}" method="POST" class="water-form">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="date_logged" value="{{ selected_date }}">
+                        
+                        <button type="submit" name="amount_ml" value="250" class="btn btn-water">
+                            <i class="fas fa-tint"></i> +250 ml
+                        </button>
+                        
+                        <button type="submit" name="amount_ml" value="500" class="btn btn-water">
+                            <i class="fas fa-tint"></i> +500 ml
+                        </button>
+                        
+                        <button type="submit" name="amount_ml" value="750" class="btn btn-water">
+                            <i class="fas fa-tint"></i> +750 ml
+                        </button>
+                        
+                        <button type="submit" name="amount_ml" value="1000" class="btn btn-water">
+                            <i class="fas fa-tint"></i> +1000 ml
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Individual Water Entries -->
+                {% if water_entries %}
+                <div class="water-entries">
+                    <div class="water-entries-header">
+                        <h4>Today's Water Intake</h4>
+                    </div>
+                    {% for entry in water_entries %}
+                    <div class="water-entry">
+                        <div class="water-entry-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="water-entry-details">
+                            <div class="water-entry-amount">{{ entry.amount_ml }} ml</div>
+                            <div class="water-entry-time">{{ entry.time_logged.strftime('%I:%M %p') }}</div>
+                        </div>
+                        <div class="water-entry-actions">
+                            <form action="{{ url_for('nutrition.delete_water', entry_id=entry.id) }}" method="POST" class="delete-form">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn-icon delete" onclick="return confirm('Are you sure you want to delete this water entry?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Weekly Stats -->
+        <div class="panel weekly-stats-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-chart-line"></i> Weekly Stats
+                </div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Avg Calories</div>
+                    <div class="stat-value">{{ weekly_stats.avg_calories }} kcal</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Avg Protein</div>
+                    <div class="stat-value">{{ weekly_stats.avg_protein }} g</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Avg Carbs</div>
+                    <div class="stat-value">{{ weekly_stats.avg_carbs }} g</div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-label">Avg Fat</div>
+                    <div class="stat-value">{{ weekly_stats.avg_fat }} g</div>
+                </div>
+            </div>
+            
+            <!-- Weekly Trends Chart -->
+            <div class="weekly-trends-chart-container">
+                <canvas id="weeklyTrendsChart"></canvas>
+            </div>
+            
+            <div class="consistency-tracker">
+                <div class="consistency-label">Consistency</div>
+                <div class="day-dots">
+                    {% for i in range(7) %}
+                        {% if i < weekly_stats.days_logged %}
+                            <div class="day-dot active"></div>
+                        {% else %}
+                            <div class="day-dot"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="consistency-text">{{ weekly_stats.days_logged }}/{{ weekly_stats.total_days }} days</div>
+                <div class="consistency-subtext">Based on {{ weekly_stats.days_logged }} days logged</div>
+            </div>
+        </div>
+        
+        <!-- Nutrition Tip -->
+        <div class="panel nutrition-tip-panel">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <i class="fas fa-lightbulb"></i> Nutrition Tip
+                </div>
+                <div class="tip-badge">Daily insight</div>
+            </div>
+            
+            {% if tip %}
+            <div class="tip-content">
+                {{ tip.tip_text }}
+            </div>
+            <div class="tip-footer">
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+            {% else %}
+            <div class="tip-content">
+                Try to include a variety of colorful fruits and vegetables in your diet. Each color provides different phytonutrients and antioxidants that support your immune system and overall health.
+            </div>
+            <div class="tip-footer">
+                <a href="#" class="learn-more">Learn more <i class="fas fa-arrow-right"></i></a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Right Column: Nutrition AI -->
+    <div class="dashboard-column ai-column">
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fas fa-brain"></i> Nutrition AI
+            </div>
+            <div class="ai-status active">
+                <span class="status-dot"></span> Active
+            </div>
+        </div>
+        
+        <div class="ai-analyzer">
+            <div id="ai-results" class="ai-results">
+                <div class="ai-placeholder">
+                    <div class="placeholder-image">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <p>Take a photo of your food or describe it, and I'll provide nutritional estimates!</p>
+                </div>
+            </div>
+            
+            <div class="ai-input">
+                <form id="image-upload-form" action="{{ url_for('api.analyze_food_image') }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="file" id="image-input" name="image" accept="image/*" class="hidden-input">
+                    <label for="image-input" class="upload-btn">
+                        <i class="fas fa-camera"></i>
+                    </label>
+                    <input type="text" id="food-description" placeholder="Ask about nutrition or describe image..." class="ai-text-input">
+                    <button type="submit" class="ai-submit-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden form for adding food from AI analysis -->
+<form id="add-from-analysis-form" action="{{ url_for('nutrition.add_food') }}" method="POST" style="display: none;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="analysis_id" id="analysis-id">
+    <input type="hidden" name="ai_analyzed" value="true">
+    <input type="hidden" name="date_logged" value="{{ selected_date }}">
+</form>
+
+<!-- Image Preview Modal -->
+<div id="image-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="modal-image" src="" alt="Food Image">
+    </div>
+</div>
+{% endblock %}

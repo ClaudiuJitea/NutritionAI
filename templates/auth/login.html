@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Diet & Nutrition{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+<style>
+    body {
+        background-color: var(--primary-bg);
+    }
+    
+    .auth-container {
+        display: flex;
+        min-height: calc(100vh - 60px);
+    }
+    
+    .auth-panel {
+        flex: 0 0 400px;
+        background-color: var(--secondary-bg);
+        padding: var(--spacing-xl);
+    }
+    
+    .auth-features {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: var(--spacing-xxl);
+    }
+    
+    .feature-header h2 {
+        color: var(--accent-color);
+        font-size: 2rem;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .feature-header p {
+        color: var(--text-secondary);
+    }
+    
+    .feature-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--secondary-bg);
+        border-radius: 50%;
+        margin-right: var(--spacing-md);
+        color: var(--accent-color);
+    }
+    
+    .input-with-icon {
+        position: relative;
+    }
+    
+    .input-with-icon i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-secondary);
+    }
+    
+    .input-with-icon input {
+        padding-left: 40px;
+        background-color: var(--tertiary-bg);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+    }
+    
+    .btn-primary {
+        background-color: var(--accent-color);
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block page_js %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-panel">
+        <div class="auth-header">
+            <h1><i class="fas fa-sign-in-alt"></i> Login</h1>
+            <p>Welcome back! Please login to your account.</p>
+        </div>
+        
+        <div class="auth-form">
+            <form method="POST" action="{{ url_for('auth.login') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    {% if form.email.errors %}
+                        <div class="form-error">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="form-error">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group remember-me">
+                    <label class="checkbox-container">
+                        <input type="checkbox" name="remember" id="remember">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+        </div>
+    </div>
+    
+    <div class="auth-features">
+        <div class="feature-header">
+            <h2>Diet & Nutrition AI</h2>
+            <p>Your personal nutrition assistant powered by artificial intelligence</p>
+        </div>
+        
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Food Image Analysis</h3>
+                    <p>Take a photo of your meal and get instant nutritional information</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Nutrition Tracking</h3>
+                    <p>Track your daily calories, macros, and water intake with beautiful visualizations</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Personalized Tips</h3>
+                    <p>Get AI-powered nutrition advice tailored to your goals and preferences</p>
+                </div>
+            </div>
+            
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <div class="feature-text">
+                    <h3>Mobile Friendly</h3>
+                    <p>Access your nutrition data on any device with our responsive design</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,442 @@
+/* Authentication Styles for Diet & Nutrition AI Application */
+
+/* Auth Layout */
+.auth-container {
+    display: flex;
+    min-height: calc(100vh - 60px);
+    background-color: var(--primary-bg);
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-lg);
+}
+
+.auth-form {
+    margin-top: var(--spacing-lg);
+}
+
+.auth-panel {
+    background-color: var(--secondary-bg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    width: 450px;
+    max-width: 100%;
+    padding: var(--spacing-xl);
+}
+
+.auth-header {
+    padding-bottom: var(--spacing-lg);
+    text-align: left;
+}
+
+.auth-header h1 {
+    display: flex;
+    align-items: center;
+    font-size: 1.75rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.auth-header h1 i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.auth-header p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-title i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.auth-subtitle {
+    color: var(--text-secondary);
+}
+
+.auth-content {
+    padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl);
+}
+
+/* Login Form */
+.login-form .form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.login-form .form-control {
+    padding: var(--spacing-md);
+}
+
+.login-form .form-actions {
+    margin-top: var(--spacing-xl);
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.remembe.form-row, .macros-row {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.macros-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+}
+
+.macros-row .form-group {
+    flex: 1;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.checkbox-container input {
+    margin-right: var(--spacing-sm);
+    accent-color: var(--accent-color);
+}
+
+.terms-link, .privacy-link {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.terms-link:hover, .privacy-link:hover {
+    text-decoration: underline;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: var(--spacing-md);
+    font-size: 0.9rem;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    margin: var(--spacing-xl) 0;
+    color: var(--text-secondary);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.auth-divider span {
+    padding: 0 var(--spacing-md);
+    font-size: 0.9rem;
+}
+
+.social-login {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background-color: var(--border-color);
+}
+
+.social-btn i {
+    margin-right: var(--spacing-sm);
+}
+
+.auth-features {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--spacing-xxl);
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+    height: 48px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.auth-footer a {
+    font-weight: 500;
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Registration Form */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-md);
+    background-color: var(--tertiary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    height: 48px;
+}
+
+.form-control:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.form-control.is-invalid {
+    border-color: var(--danger-color);
+}
+
+.form-error {
+    color: var(--danger-color);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Checkbox styling */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: var(--spacing-md) 0;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-color);
+    cursor: pointer;
+}
+
+.terms-link, .privacy-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.terms-link:hover, .privacy-link:hover {
+    text-decoration: underline;
+}
+
+.form-actions {
+    margin-top: var(--spacing-xl);
+}
+
+.form-section {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+}
+
+.form-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.section-hint {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.nutrition-goals-section {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-title {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nutrition-calculator {
+    background-color: var(--tertiary-bg);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.calculator-hint {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.calculator-hint i {
+    margin-right: var(--spacing-sm);
+    color: var(--accent-color);
+}
+
+.calculator-formula {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.terms-container {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Marketing Features */
+.marketing-features {
+    margin-top: var(--spacing-xl);
+}
+
+.feature-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.feature-header h2 {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--accent-color);
+}
+
+.feature-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+}
+
+.feature-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius-circle);
+    background-color: rgba(0, 210, 163, 0.1);
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--spacing-md);
+}
+
+.feature-text {
+    flex: 1;
+}
+
+/* Terms Modal */
+.terms-modal .modal-content {
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.terms-modal h2 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.terms-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.terms-section h3 {
+    margin-bottom: var(--spacing-md);
+    color: var(--accent-color);
+}
+
+.terms-section p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
+.terms-section ul {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+}
+
+.terms-section li {
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-form-container {
+        padding: var(--spacing-md);
+    }
+    
+    .social-login {
+        flex-direction: column;
+    }
+}
