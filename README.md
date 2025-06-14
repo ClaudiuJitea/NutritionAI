@@ -110,6 +110,16 @@ MAX_CONTENT_LENGTH=16777216
 3. **Log Food**: Add food entries manually or by uploading food photos for AI analysis
 4. **Track Progress**: Monitor your daily intake and view statistics
 
+### Default Admin Account
+
+When you first run the application, a default admin account is automatically created:
+
+- **Username**: `admin`
+- **Email**: `admin@example.com`
+- **Password**: `admin123`
+
+**⚠️ Important Security Note**: Change the default password immediately after your first login for security purposes. You can do this through the user profile page after logging in.
+
 ### Food Logging
 
 - **Manual Entry**: Add food items with nutritional information
