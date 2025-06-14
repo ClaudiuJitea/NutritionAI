@@ -2,6 +2,17 @@
 
 A comprehensive web application for tracking daily nutrition intake with AI-powered food analysis using image recognition.
 
+![image](https://github.com/user-attachments/assets/69ea3c89-2ff0-49a4-804b-8e1a1937f6f8)
+
+
+![image](https://github.com/user-attachments/assets/3ece9e42-ae12-4e2e-b3da-153405f3ab25)
+
+
+![image](https://github.com/user-attachments/assets/cdf182b4-7ccf-44fb-9ba9-838b68e5663d)
+
+
+
+
 ## Features
 
 - 🍎 **Food Tracking**: Log meals with detailed nutritional information
