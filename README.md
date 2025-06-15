@@ -42,7 +42,7 @@ A comprehensive web application for tracking daily nutrition intake with AI-powe
 1. **Clone the repository**
    ```bash
    git clone https://github.com/ClaudiuJitea/NutritionAI.git
-   cd nutrition-app
+   cd NutritionAI
    ```
 
 2. **Create a virtual environment**
